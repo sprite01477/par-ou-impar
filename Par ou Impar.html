@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Par ou Ímpar</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  height: 100vh;
+  background: linear-gradient(120deg, #7f00ff, #00c6ff);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: bgMove 6s infinite alternate;
+}
+
+@keyframes bgMove {
+  0% { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(60deg); }
+}
+
+.card {
+  backdrop-filter: blur(15px);
+  background: rgba(255,255,255,0.15);
+  padding: 30px;
+  border-radius: 20px;
+  width: 320px;
+  text-align: center;
+  box-shadow: 0 0 40px rgba(0,0,0,0.4);
+}
+
+h1 {
+  color: white;
+  margin-bottom: 20px;
+  letter-spacing: 2px;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+}
+
+button {
+  flex: 1;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: bold;
+  color: white;
+  transition: 0.3s;
+}
+
+.par {
+  background: #00ff88;
+  box-shadow: 0 0 15px #00ff88;
+}
+
+.impar {
+  background: #ff0055;
+  box-shadow: 0 0 15px #ff0055;
+}
+
+button:hover {
+  transform: scale(1.05);
+  filter: brightness(1.2);
+}
+
+#resultado {
+  margin-top: 20px;
+  color: white;
+  font-size: 16px;
+  min-height: 60px;
+  animation: fade 0.5s;
+}
+
+@keyframes fade {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+  <h1>🎲 PAR OU ÍMPAR</h1>
+
+  <input type="number" id="numero" placeholder="Digite seu número">
+
+  <div class="buttons">
+    <button class="par" onclick="jogar('par')">PAR</button>
+    <button class="impar" onclick="jogar('impar')">ÍMPAR</button>
+  </div>
+
+  <div id="resultado"></div>
+</div>
+
+<script>
+function jogar(escolha) {
+  const input = document.getElementById("numero");
+  const resultadoDiv = document.getElementById("resultado");
+
+  if (input.value === "") {
+    resultadoDiv.innerHTML = "⚠️ Digita um número, doido";
+    return;
+  }
+
+  const user = Number(input.value);
+  const bot = Math.floor(Math.random() * 10);
+  const soma = user + bot;
+  const resultado = soma % 2 === 0 ? "par" : "impar";
+
+  let texto = `
+    Você: <b>${user}</b><br>
+    Bot: <b>${bot}</b><br>
+    Soma: <b>${soma}</b><br><br>
+  `;
+
+  if (resultado === escolha) {
+    texto += "🔥 <b>VITÓRIA!</b>";
+  } else {
+    texto += "💀 <b>DERROTA!</b>";
+  }
+
+  resultadoDiv.innerHTML = texto;
+}
+</script>
+
+</body>
+</html>
